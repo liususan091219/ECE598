@@ -11,7 +11,7 @@ doclen2 = 1./doclen./doclen;
 doclen3 = doclen2 ./doclen;
 doclen = diag(1./doclen);
 
-E1 = sum(dwmat)'/D; 
+E1 = sum(doclen * dwmat)'/D; 
 
 punorm2 = doclen * dwmat;
 E2 = ktensor2(doclen2, wdmat) / D;
