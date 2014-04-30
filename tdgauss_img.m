@@ -19,9 +19,9 @@ disp 'computing first eigen decomposition...'
 [U01, D01] = eig(E2 - E1 * E1');
 disp 'finished computing first eigen decomposition.'
 [sigma, idx] = min(diag(D01));
-vector = U01(idx, :);
-xmex = bsxfun(@minus, wdmat, E1);
-M1 = sum(wdmat * diag(xmex .* xmex), 2)/D;
+vector = U01(:, idx);
+vtxmex = vector' * bsxfun(@minus, wdmat, E1);
+M1 = sum(wdmat * diag(vtxmex .* vtxmex), 2)/D;
 
 M2 = E2 - sigma * eye(W, W);
 [U1, D1] = eigs(M2, T, 'la');
