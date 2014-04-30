@@ -80,6 +80,7 @@ for kk = 1:T
 end
 
 mumap = normalize_cols(U1 * (diag(sqrt(D1))*thetas));
+mumap = bsxfun(@rdivide,mumap,sum(mumap, 1));
 
 function M = normalize_cols(M)
 sp = sum(max(M,0),1);

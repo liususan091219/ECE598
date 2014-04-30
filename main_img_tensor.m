@@ -26,6 +26,6 @@ fea = fea/maxValue;
 
 T = classnum;
 mumap = tdgauss_img(fea, T);
-fea2 = fea * mumap;
+fea2 = fea * mumap * diag(1./sqrt(sum(mumap.*mumap, 1)));
 [C, result] = max(fea2, [], 2);
 score = nmi(gnd, result)
