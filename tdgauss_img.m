@@ -11,14 +11,17 @@ doclen2 = 1./doclen./doclen;
 doclen3 = doclen2 ./doclen;
 doclen = diag(1./doclen);
 
-M1 = sum(dwmat)'/D; 
+E1 = sum(dwmat)'/D; 
 
 punorm2 = doclen * dwmat;
 E2 = ktensor2(doclen2, wdmat) / D;
 disp 'computing first eigen decomposition...'
-[U01, D01] = eig(E2 - M1 * M1');
+[U01, D01] = eig(E2 - E1 * E1');
 disp 'finished computing first eigen decomposition.'
-sigma = min(diag(D01));
+[sigma, idx] = min(diag(D01));
+vector = U01(idx, :);
+xmex = bsxfun(@minus, wdmat, E1);
+M1 = sum(wdmat * diag(xmex .* xmex), 2)/D;
 
 M2 = E2 - sigma * eye(W, W);
 [U1, D1] = eigs(M2, T, 'la');
@@ -39,7 +42,7 @@ E3 = tensor(ktensor3(doclen3, tdmat));
 
 x11 = x2M1 + permute(x2M1, [1 3 2]) + permute(x2M1, [3 1 2]);
 
-M3 = E3/D - sigma * x11;
+M3 = E3/D - x11;
 ws = zeros(1, T);
 thetas = zeros(T, T);
 for kk = 1:T
