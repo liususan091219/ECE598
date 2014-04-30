@@ -16,6 +16,14 @@ N = 30.0;
 lr = 1.0;
 powereps = 1e-5;
 
+[nSmp,nFea] = size(fea);
+for i = 1:nSmp
+     fea(i,:) = fea(i,:) ./ max(1e-12,norm(fea(i,:)));
+end
+
+maxValue = max(max(fea));
+fea = fea/maxValue;
+
 T = classnum;
 mumap = tdgauss_img(fea, T);
 fea2 = fea * mumap;
